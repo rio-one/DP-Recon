@@ -48,12 +48,12 @@ DP-Recon incorporates diffusion priors for decompositional neural scene reconstr
 ```bash
 conda create -n dprecon python=3.9
 conda activate dprecon
-pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu128
 pip install tensorflow-hub
 pip install -r requirements.txt
 pip install accelerate
 pip install lightning==2.2.3
-pip install xformers==0.0.20             # need exactly match torch version
+pip install xformers==0.0.31             # need exactly match torch version
 pip install setuptools==69.5.1
 pip install git+https://github.com/KAIR-BAIR/nerfacc.git@v0.5.2
 pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
