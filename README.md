@@ -60,6 +60,7 @@ pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/to
 pip install git+https://github.com/ashawkey/envlight.git
 pip install git+https://github.com/openai/CLIP.git
 pip install git+https://github.com/NVlabs/nvdiffrast.git
+pip install tiny-cuda-nn-master #c++14 --> c++17
 # pip uninstall datasets                  # if have conflict with local datasets
 ```
 If you are unable to access huggingface to download SD 1.5, SD 2.1, CLIPs or inpainting models, you can download them from [here](https://drive.google.com/file/d/1KR6WBdzfo9s2U3BVIQ84z6vNw1qm39L2/view?usp=drive_link) and place the `$pretrained_models` files to `code/pretrained_models`. Then, configure huggingface to load models from local files as follows:

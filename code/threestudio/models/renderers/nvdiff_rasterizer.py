@@ -299,12 +299,13 @@ class NVDiffRasterizer(Rasterizer):
 
         depth_raw = depth
 
-        print(
-            depth_raw[depth_raw > 0].detach().cpu().numpy().min(),
-            depth_raw[depth_raw > 0].detach().cpu().numpy().max(),
-            depth.detach().cpu().numpy().min(),
-            depth.detach().cpu().numpy().max(),
-        )
+        # print(
+        #         "min depth", 
+        #         depth_raw[depth_raw > 0].detach().cpu().numpy().min(),
+        #         "max depth",
+        #         depth_raw[depth_raw > 0].detach().cpu().numpy().max()
+        #     )
+        
 
         disparity = self.depth_normalization(
             depth,

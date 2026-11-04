@@ -176,18 +176,17 @@ class PriorModule(nn.Module, SaverMixin):
         self.color_mesh_dict[obj_idx] = Mesh(v_pos, t_pos_idx)                       # mesh in threestudio type
     
     def init_color_render_module(self, mesh_color_network):
-
         self.material = threestudio.find(self.cfg.system.color_material_type)(self.cfg.system.color_material).to(self.device)
         self.background = threestudio.find(self.cfg.system.color_background_type)(self.cfg.system.color_background).to(self.device)
         self.renderer = threestudio.find(self.cfg.system.color_renderer_type)(
             self.cfg.system.color_renderer,
-            geometry=mesh_color_network,              # mesh_color_network to get features
+            geometry=mesh_color_network,              
             material=self.material,
             background=self.background,
         ).to(self.device)
         self.exporter = threestudio.find(self.cfg.system.color_exporter_type)(
             self.cfg.system.color_exporter,
-            geometry=mesh_color_network,              # mesh_color_network to get features
+            geometry=mesh_color_network,              
             material=self.material,
             background=self.background,
         )

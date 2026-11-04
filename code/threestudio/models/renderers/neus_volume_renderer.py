@@ -369,7 +369,21 @@ class NeuSVolumeRenderer(VolumeRenderer):
 
         if self.training:
             output_vis = self.geometry.sdf_network.use_visgrid
-            geo_out = self.geometry(positions, ray_origins=t_origins, output_normal=True, output_vis=output_vis)
+            chunk_size = 1024 * 128 # 每次只送 13 万个点进网络，极大降低显存峰值
+            geo_out_list = []
+            for i in range(0, positions.shape[0], chunk_size):
+                pos_chunk = positions[i:i+chunk_size]
+                t_origins_chunk = t_origins[i:i+chunk_size]
+                out_chunk = self.geometry(pos_chunk, ray_origins=t_origins_chunk, output_normal=True, output_vis=output_vis)
+                geo_out_list.append(out_chunk)
+
+            # 合并结果（假设 geo_out 是一个字典，包含 'sdf', 'gradients' 等键）
+            geo_out = {}
+            for k in geo_out_list[0].keys():
+                if isinstance(geo_out_list[0][k], torch.Tensor):
+                    geo_out[k] = torch.cat([out[k] for out in geo_out_list], dim=0)
+                else:
+                    geo_out[k] = geo_out_list[0][k] # 非 Tensor 保持原样
             rgb_fg_all = self.material(
                 viewdirs=t_dirs,
                 positions=positions,

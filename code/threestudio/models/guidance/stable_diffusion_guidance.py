@@ -21,7 +21,7 @@ class StableDiffusionGuidance(BaseObject):
         pretrained_model_name_or_path: str = "runwayml/stable-diffusion-v1-5"
         enable_memory_efficient_attention: bool = False
         enable_sequential_cpu_offload: bool = False
-        enable_attention_slicing: bool = False
+        enable_attention_slicing: bool = True
         enable_channels_last_format: bool = False
         guidance_scale: float = 100.0
         grad_clip: Optional[
@@ -76,9 +76,11 @@ class StableDiffusionGuidance(BaseObject):
             "torch_dtype": self.weights_dtype,
         }
         self.pipe = StableDiffusionPipeline.from_pretrained(
-            self.cfg.pretrained_model_name_or_path,
+            "/home/seed/wangruiyao/DP-Recon/code/pretrained_models/huggingface/hub/models--stabilityai--stable-diffusion-2-1-base/snapshots/5ede9e4bf3e3fd1cb0ef2f7a3fff13ee514fdf06",local_files_only=True,
             **pipe_kwargs,
         ).to(self.device)
+
+        self.pipe.enable_attention_slicing()
 
         if self.cfg.enable_memory_efficient_attention:
             if parse_version(torch.__version__) >= parse_version("2"):
